@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Provides a Diactoros Response object for ResponseInterface.
+ * Provides a Response object for ResponseInterface.
  *
  * @author Kendall Weaver <kendalltweaver@gmail.com>
  * @since 0.0.1 Initial Release
@@ -27,7 +27,7 @@ class ResponseService extends AbstractServiceProvider
 
 
     /**
-     * Use the Diactoros Response object to implement the interface.
+     * Use the Response object to implement the interface.
      *
      * @return void
      */
