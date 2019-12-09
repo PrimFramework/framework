@@ -36,11 +36,10 @@ class Psr7Factory
      * @param string|UriInterface $uri
      * @param array $headers
      * @param string|null|resource|StreamInterface $body
-     * @param string $version
      * @return RequestInterface
      */
     public static function request(
-        $method,
+        string $method,
         $uri,
         array $headers = [],
         $body = null
@@ -123,10 +122,10 @@ class Psr7Factory
      */
     public static function uploadedFile(
         $streamOrFile,
-        $size,
-        $errorStatus,
-        $clientFilename = null,
-        $clientMediaType = null
+        int $size,
+        int $errorStatus,
+        string $clientFilename = null,
+        string $clientMediaType = null
     ): UploadedFileInterface {
         return new UploadedFile(
             $streamOrFile,
