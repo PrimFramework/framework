@@ -1,0 +1,14 @@
+{
+    "require": {
+        "league/route": "^4.3",
+        "league/container": "^3.3",
+        "zendframework/zend-httphandlerrunner": "^1.1",
+        "league/plates": "^3.3",
+        "guzzlehttp/psr7": "^1.6"
+    },
+    "autoload": {
+        "psr-4": {
+            "KendallTristan\\Prim\\": "src/"
+        }
+    }
+}
