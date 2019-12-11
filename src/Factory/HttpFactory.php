@@ -1,9 +1,11 @@
 <?php
 
 /**
- * Factory for returning objects implementing the PSR-7 interfaces. Also has
- * functions for returning the implementation class names. This is mostly a
- * wrapper for Guzzle's HttpFactory class but with Client functions as well.
+ * PSR-17 factory for creating objects implementing the PSR-7 interfaces. Also
+ * has functions for returning the implementation class names and function for
+ * PSR-18 HTTP clients as well.
+ *
+ * This is mostly ripped straight out of the 2.x dev branch of guzzlehttp/psr7.
  *
  * @author Kendall Weaver <kendalltweaver@gmail.com>
  * @since 0.0.1 Initial Release
@@ -13,7 +15,6 @@ declare(strict_types=1);
 
 namespace KendallTristan\Prim\Factory;
 
-use GuzzleHttp\Psr7\HttpFactory as Factory;
 use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Psr7\Response;
 use GuzzleHttp\Psr7\ServerRequest;
@@ -22,16 +23,16 @@ use GuzzleHttp\Psr7\UploadedFile;
 use GuzzleHttp\Psr7\Uri;
 use Psr\Http\Client\ClientInterface;
 use Psr\Http\Message\RequestFactoryInterface;
-use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseFactoryInterface;
-use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestFactoryInterface;
-use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Message\StreamFactoryInterface;
-use Psr\Http\Message\StreamInterface;
 use Psr\Http\Message\UploadedFileFactoryInterface;
-use Psr\Http\Message\UploadedFileInterface;
 use Psr\Http\Message\UriFactoryInterface;
+use Psr\Http\Message\RequestInterface;
+use Psr\Http\Message\ResponseInterface;
+use Psr\Http\Message\ServerRequestInterface;
+use Psr\Http\Message\StreamInterface;
+use Psr\Http\Message\UploadedFileInterface;
 use Psr\Http\Message\UriInterface;
 use Shuttle\Shuttle;
 
@@ -63,58 +64,92 @@ class HttpFactory implements
 
 
     /**
-     * @param string $method
-     * @param string|UriInterface $uri
-     * @return RequestInterface
+     * {@inheritdoc}
      */
-    public function createRequest(string $method, $uri): RequestInterface {
-        return (new Factory)->createRequest($method, $uri);
+    public function createUploadedFile(
+        StreamInterface $stream,
+        int $size = null,
+        int $error = \UPLOAD_ERR_OK,
+        string $clientFilename = null,
+        string $clientMediaType = null
+    ): UploadedFileInterface {
+        if ($size === null) {
+            $size = $stream->getSize();
+        }
+
+        return new UploadedFile($stream, $size, $error, $clientFilename, $clientMediaType);
     }
 
 
     /**
      * @return string
      */
-    public static function requestClass(): string
+    public static function uploadedFileClass(): string
     {
-        return Request::class;
+        return UploadedFile::class;
     }
 
 
     /**
-     * @param int $code
-     * @param string $reasonPhrase
-     * @return ResponseInterface
+     * {@inheritdoc}
      */
-    public function createResponse(
-        int $code = 200,
-        string $reasonPhrase = ''
-    ): ResponseInterface {
-        return (new Factory)->createResponse($code, $reasonPhrase);
+    public function createStream(string $content = ''): StreamInterface
+    {
+        return \GuzzleHttp\Psr7\stream_for($content);
+    }
+
+
+    /**
+     * {@inheritdoc}
+     */
+    public function createStreamFromFile(string $file, string $mode = 'r'): StreamInterface
+    {
+        try {
+            $resource = \GuzzleHttp\Psr7\try_fopen($file, $mode);
+        } catch (\RuntimeException $e) {
+            if ('' === $mode || false === \in_array($mode[0], ['r', 'w', 'a', 'x', 'c'], true)) {
+                throw new \InvalidArgumentException(sprintf('Invalid file opening mode "%s"', $mode), 0, $e);
+            }
+
+            throw $e;
+        }
+
+        return \GuzzleHttp\Psr7\stream_for($resource);
+    }
+
+
+    /**
+     * {@inheritdoc}
+     */
+    public function createStreamFromResource($resource): StreamInterface
+    {
+        return \GuzzleHttp\Psr7\stream_for($resource);
     }
 
 
     /**
      * @return string
      */
-    public static function responseClass(): string
+    public static function streamClass(): string
     {
-        return Response::class;
+        return Stream::class;
     }
 
 
     /**
-     * @param string $method
-     * @param UriInterface|string $uri
-     * @param array $serverParams
-     * @return ServerRequestInterface
+     * {@inheritdoc}
      */
-    public function createServerRequest(
-        string $method,
-        $uri,
-        array $serverParams = []
-    ): ServerRequestInterface {
-        return (new Factory)->createServerRequest($method, $uri, $serverParams);
+    public function createServerRequest(string $method, $uri, array $serverParams = []): ServerRequestInterface
+    {
+        if (empty($method)) {
+            if (!empty($serverParams['REQUEST_METHOD'])) {
+                $method = $serverParams['REQUEST_METHOD'];
+            } else {
+                throw new \InvalidArgumentException('Cannot determine HTTP method');
+            }
+        }
+
+        return new ServerRequest($method, $uri, [], null, '1.1', $serverParams);
     }
 
 
@@ -137,86 +172,47 @@ class HttpFactory implements
 
 
     /**
-     * @param string $content
-     * @return StreamInterface
+     * {@inheritdoc}
      */
-    public function createStream(string $content = ''): StreamInterface
+    public function createResponse(int $code = 200, string $reasonPhrase = ''): ResponseInterface
     {
-        return (new Factory)->createStream($content);
-    }
-
-
-    /**
-     * @param string $filename
-     * @param string $mode
-     * @return StreamInterface
-     */
-    public function createStreamFromFile(string $filename, string $mode = 'r'): StreamInterface
-    {
-        return (new Factory)->createStreamFromFile($filename, $mode);
-    }
-
-
-    /**
-     * @param resource $resource
-     * @return StreamInterface
-     */
-    public function createStreamFromResource($resource): StreamInterface
-    {
-        return (new Factory)->createStreamFromResource($resource);
+        return new Response($code, [], null, '1.1', $reasonPhrase);
     }
 
 
     /**
      * @return string
      */
-    public static function streamClass(): string
+    public static function responseClass(): string
     {
-        return Stream::class;
+        return Response::class;
     }
 
 
     /**
-     * @param StreamInterface $stream
-     * @param int $size
-     * @param int $error
-     * @param string $clientFilename
-     * @param string $clientMediaType
-     * @return UploadedFileInterface
+     * {@inheritdoc}
      */
-    public function createUploadedFile(
-        StreamInterface $stream,
-        int $size = null,
-        int $error = \UPLOAD_ERR_OK,
-        string $clientFilename = null,
-        string $clientMediaType = null
-    ): UploadedFileInterface {
-        return (new Factory)->createUploadedFile(
-            $stream,
-            $size,
-            $error,
-            $clientFilename,
-            $clientMediaType
-        );
+    public function createRequest(string $method, $uri): RequestInterface
+    {
+        return new Request($method, $uri);
     }
 
 
     /**
      * @return string
      */
-    public static function uploadedFileClass(): string
+    public static function requestClass(): string
     {
-        return UploadedFile::class;
+        return Request::class;
     }
 
 
     /**
-     * @param string $uri
-     * @return UriInterface
+     * {@inheritdoc}
      */
     public function createUri(string $uri = ''): UriInterface
     {
-        return (new Factory)->createUri($uri);
+        return new Uri($uri);
     }
 
 
