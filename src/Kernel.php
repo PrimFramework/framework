@@ -11,7 +11,7 @@ declare(strict_types=1);
 
 namespace KendallTristan\Prim;
 
-use KendallTristan\Prim\Factory\Psr7Factory;
+use KendallTristan\Prim\Factory\HttpFactory;
 use KendallTristan\Prim\Routes;
 use KendallTristan\Prim\ServiceProviders;
 use League\Container\Container;
@@ -40,13 +40,15 @@ class Kernel
         Routes::init($router);
 
         // Create the request.
-        $request = Psr7Factory::serverRequest();
+        $request = (new HttpFactory)->createServerRequestFromGlobals();
 
         // Assemble and dispatch the response.
         try {
             $response = $router->dispatch($request);
         } catch (NotFoundException $e) {
-            $response = Psr7Factory::response()->withStatus(404, "Not Found");
+            $response = (new HttpFactory)
+                ->createResponse()
+                ->withStatus(404, "Not Found");
         }
 
         // Output the response back to the requester.

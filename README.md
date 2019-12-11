@@ -30,7 +30,7 @@ The aim is to have a *prim and proper* framework that makes it easy to adhere to
 
 Prim makes use of components from [The PHP League](https://thephpleague.com/), specifically [Container](https://container.thephpleague.com/), [Route](https://route.thephpleague.com/), and [Plates](http://platesphp.com/). Of those, Container and Route are hard dependencies whereas Plates is easily substituted for a templating engine of your choice. The only other hard dependencies are [PSR HTTP Message](https://github.com/php-fig/http-message) and [zend-httphandlerunner](https://docs.zendframework.com/zend-httphandlerrunner/). The latter is there for the emitter, but I may implement one within Prim to eliminate the dependency at some later point.
 
-Prim also requires a PSR-7 implementation. Guzzle's is the default, but there are no problems swapping it out for any other. If you do so, just modify or replace the `src/Factory/Psr7Factory.php` file to accommodate whichever implementation you decide to go with.
+Prim also requires a PSR-7 implementation. Guzzle's is the default, but there are no problems swapping it out for any other. If you do so, just modify or replace the `src/Factory/HttpFactory.php` file to accommodate whichever implementation you decide to go with.
 
 ---
 ### Usage

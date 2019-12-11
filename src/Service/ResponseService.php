@@ -11,7 +11,7 @@ declare(strict_types=1);
 
 namespace KendallTristan\Prim\Service;
 
-use KendallTristan\Prim\Factory\Psr7Factory;
+use KendallTristan\Prim\Factory\HttpFactory;
 use League\Container\ServiceProvider\AbstractServiceProvider;
 use Psr\Http\Message\ResponseInterface;
 
@@ -33,7 +33,7 @@ class ResponseService extends AbstractServiceProvider
      */
     public function register(): void
     {
-        $responseClass = Psr7Factory::responseClass();
+        $responseClass = HttpFactory::responseClass();
         $this->getContainer()->add(ResponseInterface::class, $responseClass);
     }
 }

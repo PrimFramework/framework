@@ -11,7 +11,7 @@ declare(strict_types=1);
 
 namespace KendallTristan\Prim\Middleware;
 
-use KendallTristan\Prim\Factory\Psr7Factory;
+use KendallTristan\Prim\Factory\HttpFactory;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\MiddlewareInterface;
@@ -39,6 +39,8 @@ class AuthMiddleware implements MiddlewareInterface
         }
 
         // Otherwise return a 401.
-        return Psr7Factory::response()->withStatus(401, "Unauthorized");
+        return (new HttpFactory)
+            ->createResponse()
+            ->withStatus(401, "Unauthorized");
     }
 }
