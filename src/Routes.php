@@ -21,7 +21,7 @@ class Routes
      * @param Router $router
      * @return Router
      */
-    public static function init(Router $router): Router
+    public function init(Router $router): Router
     {
 
         /*
@@ -31,6 +31,17 @@ class Routes
             ->map('GET', '/', 'KendallTristan\Prim\Controller\HomeController::index')
             ->middleware(new AuthMiddleware);
 
+
+        /*
+         * Example with parameter
+         */
+        $router
+            ->map('GET', '/example/{id}', 'KendallTristan\Prim\Controller\ExampleController::show');
+
+
+        /*
+         * Return the router back to the kernel.
+         */
         return $router;
     }
 }

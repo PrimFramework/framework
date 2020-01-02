@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Example controller for a home page.
+ * Example controller to show parameters and models.
  *
  * @author Kendall Weaver <kendalltweaver@gmail.com>
  * @since 0.0.1 Initial Release
@@ -11,11 +11,12 @@ declare(strict_types=1);
 
 namespace KendallTristan\Prim\Controller;
 
+use KendallTristan\Prim\Model\Example;
 use League\Plates\Engine;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 
-class HomeController
+class ExampleController
 {
 
     /**
@@ -39,14 +40,19 @@ class HomeController
 
     /**
      * @param ServerRequestInterface $request
+     * @param array $params
      * @return ResponseInterface
      */
-    public function index(ServerRequestInterface $request): ResponseInterface
+    public function show(ServerRequestInterface $request, array $params): ResponseInterface
     {
+        // Instantiate the Example using the id specified in the URI.
+        $example = new Example($params['id']);
+
+        // Render the example home template using the Example object's message.
         $this->response->getBody()->write($this->engine->render(
             'home',
             [
-                'message' => 'Welcome to Prim!'
+                'message' => $example->getMessage()
             ]
         ));
         return $this->response;
