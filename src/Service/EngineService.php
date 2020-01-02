@@ -9,7 +9,7 @@
 
 declare(strict_types=1);
 
-namespace KendallTristan\Prim\Service;
+namespace Prim\Framework\Service;
 
 use League\Container\ServiceProvider\AbstractServiceProvider;
 use League\Plates\Engine;

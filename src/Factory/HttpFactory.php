@@ -13,7 +13,7 @@
 
 declare(strict_types=1);
 
-namespace KendallTristan\Prim\Factory;
+namespace Prim\Framework\Factory;
 
 use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Psr7\Response;

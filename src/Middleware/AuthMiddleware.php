@@ -9,9 +9,9 @@
 
 declare(strict_types=1);
 
-namespace KendallTristan\Prim\Middleware;
+namespace Prim\Framework\Middleware;
 
-use KendallTristan\Prim\Factory\HttpFactory;
+use Prim\Framework\Factory\HttpFactory;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\MiddlewareInterface;

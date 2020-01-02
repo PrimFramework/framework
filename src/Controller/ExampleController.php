@@ -9,10 +9,10 @@
 
 declare(strict_types=1);
 
-namespace KendallTristan\Prim\Controller;
+namespace Prim\Framework\Controller;
 
-use KendallTristan\Prim\Model\Example;
 use League\Plates\Engine;
+use Prim\Framework\Model\Example;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 

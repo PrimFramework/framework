@@ -9,10 +9,10 @@
 
 declare(strict_types=1);
 
-namespace KendallTristan\Prim\Service;
+namespace Prim\Framework\Service;
 
-use KendallTristan\Prim\Factory\HttpFactory;
 use League\Container\ServiceProvider\AbstractServiceProvider;
+use Prim\Framework\Factory\HttpFactory;
 use Psr\Http\Message\ResponseInterface;
 
 class ResponseService extends AbstractServiceProvider

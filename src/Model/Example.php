@@ -9,7 +9,7 @@
 
 declare(strict_types=1);
 
-namespace KendallTristan\Prim\Model;
+namespace Prim\Framework\Model;
 
 class Example
 {

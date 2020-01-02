@@ -9,7 +9,7 @@
 
 declare(strict_types=1);
 
-namespace KendallTristan\Prim\Controller;
+namespace Prim\Framework\Controller;
 
 use League\Plates\Engine;
 use Psr\Http\Message\ResponseInterface;

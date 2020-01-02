@@ -9,16 +9,16 @@
 
 declare(strict_types=1);
 
-namespace KendallTristan\Prim;
+namespace Prim\Framework;
 
-use KendallTristan\Prim\Factory\HttpFactory;
-use KendallTristan\Prim\Routes;
-use KendallTristan\Prim\ServiceProviders;
 use League\Container\Container;
 use League\Container\ReflectionContainer;
 use League\Route\Http\Exception\NotFoundException;
 use League\Route\Router;
 use League\Route\Strategy\ApplicationStrategy;
+use Prim\Framework\Factory\HttpFactory;
+use Prim\Framework\Routes;
+use Prim\Framework\ServiceProviders;
 
 class Kernel
 {

@@ -11,4 +11,4 @@ declare(strict_types=1);
 
 require_once("../vendor/autoload.php");
 
-(new \KendallTristan\Prim\Kernel)->init();
+(new \Prim\Framework\Kernel)->init();

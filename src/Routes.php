@@ -9,10 +9,10 @@
 
 declare(strict_types=1);
 
-namespace KendallTristan\Prim;
+namespace Prim\Framework;
 
 use League\Route\Router;
-use KendallTristan\Prim\Middleware\AuthMiddleware;
+use Prim\Framework\Middleware\AuthMiddleware;
 
 class Routes
 {
@@ -28,7 +28,7 @@ class Routes
          * Home page
          */
         $router
-            ->map('GET', '/', 'KendallTristan\Prim\Controller\HomeController::index')
+            ->map('GET', '/', 'Prim\Framework\Controller\HomeController::index')
             ->middleware(new AuthMiddleware);
 
 
@@ -36,7 +36,7 @@ class Routes
          * Example with parameter
          */
         $router
-            ->map('GET', '/example/{id}', 'KendallTristan\Prim\Controller\ExampleController::show');
+            ->map('GET', '/example/{id}', 'Prim\Framework\Controller\ExampleController::show');
 
 
         /*

@@ -9,7 +9,7 @@
 
 declare(strict_types=1);
 
-namespace KendallTristan\Prim;
+namespace Prim\Framework;
 
 use League\Container\Container;
 
@@ -22,8 +22,8 @@ class ServiceProviders
      */
     public function init(Container $container): Container
     {
-        $container->addServiceProvider('KendallTristan\Prim\Service\EngineService');
-        $container->addServiceProvider('KendallTristan\Prim\Service\ResponseService');
+        $container->addServiceProvider('Prim\Framework\Service\EngineService');
+        $container->addServiceProvider('Prim\Framework\Service\ResponseService');
         return $container;
     }
 }
