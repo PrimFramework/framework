@@ -11,7 +11,7 @@ declare(strict_types=1);
 
 namespace Prim\Framework\Controller;
 
-use League\Plates\Engine;
+use League\Plates\Engine as Plates;
 use Prim\Framework\Model\Example;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
@@ -20,20 +20,20 @@ class ExampleController
 {
 
     /**
-     * @var Engine
+     * @var Plates
      * @var ResponseInterface
      */
-    private $engine;
+    private $template;
     private $response;
 
 
     /**
-     * @param Engine $engine
+     * @param Plates $engine
      * @param ResponseInterface $response
      */
-    public function __construct(Engine $engine, ResponseInterface $response)
+    public function __construct(Plates $template, ResponseInterface $response)
     {
-        $this->engine = $engine;
+        $this->template = $template;
         $this->response = $response;
     }
 
@@ -49,7 +49,7 @@ class ExampleController
         $example = new Example($params['id']);
 
         // Render the example home template using the Example object's message.
-        $this->response->getBody()->write($this->engine->render(
+        $this->response->getBody()->write($this->template->render(
             'home',
             [
                 'message' => $example->getMessage()

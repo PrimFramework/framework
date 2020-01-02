@@ -12,16 +12,16 @@ declare(strict_types=1);
 namespace Prim\Framework\Service;
 
 use League\Container\ServiceProvider\AbstractServiceProvider;
-use League\Plates\Engine;
+use League\Plates\Engine as Plates;
 
-class EngineService extends AbstractServiceProvider
+class PlatesService extends AbstractServiceProvider
 {
 
     /**
      * @var array
      */
     protected $provides = [
-        Engine::class
+        Plates::class
     ];
 
 
@@ -31,7 +31,7 @@ class EngineService extends AbstractServiceProvider
     public function register(): void
     {
         $this->getContainer()
-            ->add(Engine::class)
+            ->add(Plates::class)
             ->addArgument(dirname(__DIR__) . "/View");
     }
 }
