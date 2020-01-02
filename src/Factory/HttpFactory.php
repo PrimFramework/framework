@@ -21,6 +21,8 @@ use GuzzleHttp\Psr7\ServerRequest;
 use GuzzleHttp\Psr7\Stream;
 use GuzzleHttp\Psr7\UploadedFile;
 use GuzzleHttp\Psr7\Uri;
+use Laminas\HttpHandlerRunner\Emitter\EmitterInterface;
+use Laminas\HttpHandlerRunner\Emitter\SapiEmitter;
 use Psr\Http\Client\ClientInterface;
 use Psr\Http\Message\RequestFactoryInterface;
 use Psr\Http\Message\ResponseFactoryInterface;
@@ -44,6 +46,24 @@ class HttpFactory implements
     UploadedFileFactoryInterface,
     UriFactoryInterface
 {
+
+    /**
+     * @return EmitterInterface
+     */
+    public function createEmitter(): EmitterInterface
+    {
+        return new SapiEmitter;
+    }
+
+
+    /**
+     * @return string
+     */
+    public static function emitterClass(): string
+    {
+        return SapiEmitter::class;
+    }
+
 
     /**
      * @return ClientInterface

@@ -19,7 +19,6 @@ use League\Container\ReflectionContainer;
 use League\Route\Http\Exception\NotFoundException;
 use League\Route\Router;
 use League\Route\Strategy\ApplicationStrategy;
-use Zend\HttpHandlerRunner\Emitter\SapiEmitter;
 
 class Kernel
 {
@@ -52,6 +51,6 @@ class Kernel
         }
 
         // Output the response back to the requester.
-        (new SapiEmitter)->emit($response);
+        (new HttpFactory)->createEmitter()->emit($response);
     }
 }
