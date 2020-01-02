@@ -36,7 +36,7 @@ class Kernel
         // Instantiate a router, add the container, and load the routes.
         $strategy = (new ApplicationStrategy)->setContainer($container);
         $router = (new Router)->setStrategy($strategy);
-        $router = (new Routes)->init($router);
+        $router = (new Routes)->init($router, $container);
 
         // Create the request.
         $request = (new HttpFactory)->createServerRequestFromGlobals();
@@ -49,6 +49,8 @@ class Kernel
                 ->createResponse()
                 ->withStatus(404, "Not Found");
         }
+
+        // TODO: Configure default response behavior for the router.
 
         // Output the response back to the requester.
         (new HttpFactory)->createEmitter()->emit($response);

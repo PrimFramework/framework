@@ -31,7 +31,7 @@ class AuthMiddleware implements MiddlewareInterface
     ): ResponseInterface {
 
         // Determine whether or not the user is authenticated.
-        $auth = true;
+        $auth = false;
 
         // If so, use the request handler to continue to the next middleware.
         if ($auth === true) {
