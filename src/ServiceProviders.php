@@ -18,11 +18,12 @@ class ServiceProviders
 
     /**
      * @param Container $container
-     * @return void
+     * @return Container
      */
-    public static function init(Container $container): void
+    public function init(Container $container): Container
     {
         $container->addServiceProvider('KendallTristan\Prim\Service\EngineService');
         $container->addServiceProvider('KendallTristan\Prim\Service\ResponseService');
+        return $container;
     }
 }

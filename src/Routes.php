@@ -19,9 +19,9 @@ class Routes
 
     /**
      * @param Router $router
-     * @return void
+     * @return Router
      */
-    public static function init(Router $router): void
+    public static function init(Router $router): Router
     {
 
         /*
@@ -30,5 +30,7 @@ class Routes
         $router
             ->map('GET', '/', 'KendallTristan\Prim\Controller\HomeController::index')
             ->middleware(new AuthMiddleware);
+
+        return $router;
     }
 }

@@ -27,17 +27,17 @@ class Kernel
     /**
      * @return void
      */
-    public static function init(): void
+    public function init(): void
     {
         // Instantiate a container, set up auto-wiring, and load the services.
         $container = new Container();
         $container->delegate(new ReflectionContainer);
-        ServiceProviders::init($container);
+        $container = (new ServiceProviders)->init($container);
 
         // Instantiate a router, add the container, and load the routes.
         $strategy = (new ApplicationStrategy)->setContainer($container);
-        $router   = (new Router)->setStrategy($strategy);
-        Routes::init($router);
+        $router = (new Router)->setStrategy($strategy);
+        $router = (new Routes)->init($router);
 
         // Create the request.
         $request = (new HttpFactory)->createServerRequestFromGlobals();
