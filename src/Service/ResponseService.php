@@ -12,7 +12,7 @@ declare(strict_types=1);
 namespace Prim\Framework\Service;
 
 use League\Container\ServiceProvider\AbstractServiceProvider;
-use Prim\Framework\Factory\HttpFactory;
+use Prim\HttpFactory\HttpFactory;
 use Psr\Http\Message\ResponseInterface;
 
 class ResponseService extends AbstractServiceProvider

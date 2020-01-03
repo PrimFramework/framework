@@ -11,7 +11,7 @@ declare(strict_types=1);
 
 namespace Prim\Framework\Middleware;
 
-use Prim\Framework\Factory\HttpFactory;
+use Prim\HttpFactory\HttpFactory;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\MiddlewareInterface;
@@ -30,8 +30,8 @@ class AuthMiddleware implements MiddlewareInterface
         RequestHandlerInterface $handler
     ): ResponseInterface {
 
-        // Determine whether or not the user is authenticated.
-        $auth = false;
+        // Set this to false to demonstrate.
+        $auth = true;
 
         // If so, use the request handler to continue to the next middleware.
         if ($auth === true) {

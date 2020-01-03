@@ -16,9 +16,9 @@ use League\Container\ReflectionContainer;
 use League\Route\Http\Exception\NotFoundException;
 use League\Route\Router;
 use League\Route\Strategy\ApplicationStrategy;
-use Prim\Framework\Factory\HttpFactory;
 use Prim\Framework\Routes;
 use Prim\Framework\ServiceProviders;
+use Prim\HttpFactory\HttpFactory;
 
 class Kernel
 {

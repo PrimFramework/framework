@@ -14,8 +14,8 @@ namespace Prim\Framework;
 use League\Container\Container;
 use League\Route\Router;
 use League\Route\Strategy\JsonStrategy;
-use Prim\Framework\Factory\HttpFactory;
 use Prim\Framework\Middleware\AuthMiddleware;
+use Prim\HttpFactory\HttpFactory;
 
 class Routes
 {
