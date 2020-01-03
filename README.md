@@ -30,7 +30,7 @@ The aim is to have a *prim and proper* framework that makes it easy to adhere to
 
 Prim makes use of components from [The PHP League](https://thephpleague.com/), specifically [Container](https://container.thephpleague.com/), [Route](https://route.thephpleague.com/), and [Plates](http://platesphp.com/). Of those, Container and Route are hard dependencies whereas Plates is easily substituted for a templating engine of your choice.
 
-Prim also requires implementations of PSR-7, PSR-17, PSR-18, and an emitter for the RequestHandlerInterface. By default it uses guzzlehttp/psr7, nimbly/shuttle, and laminas/laminas-httphandlerrunner. The PSR-17 implementation is via the `src/Factory/HttpFactory.php` file which also includes methods for creating an HTTP client and emitter as well as static methods for returning the class of each type of object the factory is capable of generating. If you wish to substitute the aforementioned dependencies for other implementations, you should only ever need to modify the factory in order to do so.
+Prim also requires implementations of PSR-7, PSR-17, PSR-18, and an emitter for the RequestHandlerInterface. By default it uses guzzlehttp/psr7, socialconnect/http-client, and laminas/laminas-httphandlerrunner. The PSR-17 implementation is via the `src/Factory/HttpFactory.php` file which also includes methods for creating an HTTP client and emitter as well as static methods for returning the class of each type of object the factory is capable of generating. If you wish to substitute the aforementioned dependencies for other implementations, you should only ever need to modify the factory in order to do so.
 
 ---
 ### Usage

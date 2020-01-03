@@ -36,7 +36,7 @@ use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Message\StreamInterface;
 use Psr\Http\Message\UploadedFileInterface;
 use Psr\Http\Message\UriInterface;
-use Shuttle\Shuttle;
+use SocialConnect\HttpClient\Curl;
 
 class HttpFactory implements
     RequestFactoryInterface,
@@ -70,7 +70,7 @@ class HttpFactory implements
      */
     public function createClient(): ClientInterface
     {
-        return new Shuttle;
+        return new Curl;
     }
 
 
@@ -79,7 +79,7 @@ class HttpFactory implements
      */
     public static function clientClass(): string
     {
-        return Shuttle::class;
+        return Curl::class;
     }
 
 
