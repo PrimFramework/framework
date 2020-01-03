@@ -11,12 +11,12 @@ This project is *very* young and likely to undergo changes. If you're looking fo
 Installation is as simple as it gets:
 
 ```
-git clone https://github.com/kendalltristan/prim.git
-cd prim
+git clone https://github.com/PrimFramework/framework.git
+cd framework
 composer install
 ```
 
-When setting up your web server, point it to the `public` directory. All requests need to go through the `public/index.php` file. There's an `.htaccess` file in there that does this for enabled web servers, but you may want to delete it and handle it directly in the server configuration.
+When setting up your web server, point it to the `public` directory. All requests need to go through the `public/index.php` file. There's an `.htaccess` file that does this for enabled web servers, but you may want to delete it and handle it directly in the server configuration.
 
 ---
 ### Design
@@ -30,7 +30,7 @@ The aim is to have a *prim and proper* framework that makes it easy to adhere to
 
 Prim makes use of components from [The PHP League](https://thephpleague.com/), specifically [Container](https://container.thephpleague.com/), [Route](https://route.thephpleague.com/), and [Plates](http://platesphp.com/). Of those, Container and Route are hard dependencies whereas Plates is easily substituted for a templating engine of your choice.
 
-Prim also requires implementations of PSR-7, PSR-17, PSR-18, and an emitter for the RequestHandlerInterface. By default it uses guzzlehttp/psr7, socialconnect/http-client, and laminas/laminas-httphandlerrunner. The PSR-17 implementation is via the `src/Factory/HttpFactory.php` file which also includes methods for creating an HTTP client and emitter as well as static methods for returning the class of each type of object the factory is capable of generating. If you wish to substitute the aforementioned dependencies for other implementations, you should only ever need to modify the factory in order to do so.
+Prim also depends on its own [prim/httpfactory](https://packagist.org/packages/prim/httpfactory) component which includes all of the PSR-17 factory methods as well as methods for generating SAPI emitters and PSR-18 HTTP clients.
 
 ---
 ### Usage
