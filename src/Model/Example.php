@@ -1,7 +1,9 @@
 <?php
 
 /**
- * Example model.
+ * Example model. In this case the data is hard-coded in an array. You'll almost
+ * certainly not want to do that in an actual project, but it should work to
+ * illustrate the concept.
  *
  * @author Kendall Weaver <kendalltweaver@gmail.com>
  * @since 0.0.1 Initial Release
@@ -11,11 +13,14 @@ declare(strict_types=1);
 
 namespace Prim\Framework\Model;
 
+use League\Route\Http\Exception\NotFoundException;
+
 class Example
 {
 
     /**
      * Example data as we're not making assumptions about data persistence.
+     * 
      * @var array $exampleData
      */
     private $exampleData = [
@@ -43,7 +48,8 @@ class Example
 
 
     /**
-     * If an ID is specified, use the example data to populate the object.
+     * If an ID is specified, use the example data to populate the object. If
+     * not, throw a 404.
      *
      * @param string $id
      */
@@ -54,6 +60,8 @@ class Example
             if (array_key_exists($idInt, $this->exampleData)) {
                 $this->id = $this->exampleData[$idInt]['id'];
                 $this->message = $this->exampleData[$idInt]['message'];
+            } else {
+                throw new NotFoundException();
             }
         }
     }
@@ -79,10 +87,11 @@ class Example
 
     /**
      * @param string $message
-     * @return void
+     * @return Example
      */
-    public function setMessage(string $message): void
+    public function setMessage(string $message): Example
     {
         $this->message = $message;
+        return $this;
     }
 }

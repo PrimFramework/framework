@@ -13,12 +13,15 @@ namespace Prim\Framework;
 
 use League\Container\Container;
 use League\Container\ReflectionContainer;
-use League\Route\Http\Exception\NotFoundException;
+use League\Plates\Engine as Plates;
+use League\Route\Http\Exception as HttpException;
 use League\Route\Router;
 use League\Route\Strategy\ApplicationStrategy;
+use Prim\Framework\Controller\HttpExceptionController;
 use Prim\Framework\Routes;
 use Prim\Framework\ServiceProviders;
 use Prim\HttpFactory\HttpFactory;
+use Psr\Http\Message\ResponseInterface;
 
 class Kernel
 {
@@ -44,13 +47,15 @@ class Kernel
         // Assemble and dispatch the response.
         try {
             $response = $router->dispatch($request);
-        } catch (NotFoundException $e) {
-            $response = (new HttpFactory)
-                ->createResponse()
-                ->withStatus(404, "Not Found");
-        }
 
-        // TODO: Configure default response behavior for the router.
+        // If there's an HTTP exception, handle it.
+        } catch (HttpException $exception) {
+            $response = (new HttpExceptionController(
+                $container->get(Plates::class),
+                $container->get(ResponseInterface::class),
+                $exception
+            ))->show($request);
+        }
 
         // Output the response back to the requester.
         (new HttpFactory)->createEmitter()->emit($response);
