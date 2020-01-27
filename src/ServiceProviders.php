@@ -22,8 +22,8 @@ class ServiceProviders
      */
     public function init(Container $container): Container
     {
-        $container->addServiceProvider('Prim\Framework\Service\PlatesService');
         $container->addServiceProvider('Prim\Framework\Service\ResponseService');
+        $container->addServiceProvider('Prim\Framework\Service\TemplateEngineService');
         return $container;
     }
 }

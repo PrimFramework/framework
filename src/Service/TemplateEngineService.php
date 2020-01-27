@@ -12,16 +12,17 @@ declare(strict_types=1);
 namespace Prim\Framework\Service;
 
 use League\Container\ServiceProvider\AbstractServiceProvider;
-use League\Plates\Engine as Plates;
+use Prim\Framework\Internal\Policy\TemplateEngineInterface;
+use Prim\Framework\Internal\TemplateEngine;
 
-class PlatesService extends AbstractServiceProvider
+class TemplateEngineService extends AbstractServiceProvider
 {
 
     /**
      * @var array
      */
     protected $provides = [
-        Plates::class
+        TemplateEngineInterface::class
     ];
 
 
@@ -31,7 +32,7 @@ class PlatesService extends AbstractServiceProvider
     public function register(): void
     {
         $this->getContainer()
-            ->add(Plates::class)
+            ->add(TemplateEngineInterface::class, TemplateEngine::class)
             ->addArgument(dirname(__DIR__) . "/View");
     }
 }

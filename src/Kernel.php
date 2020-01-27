@@ -13,11 +13,11 @@ namespace Prim\Framework;
 
 use League\Container\Container;
 use League\Container\ReflectionContainer;
-use League\Plates\Engine as Plates;
 use League\Route\Http\Exception as HttpException;
 use League\Route\Router;
 use League\Route\Strategy\ApplicationStrategy;
 use Prim\Framework\Controller\HttpExceptionController;
+use Prim\Framework\Internal\Policy\TemplateEngineInterface;
 use Prim\Framework\Routes;
 use Prim\Framework\ServiceProviders;
 use Prim\HttpFactory\HttpFactory;
@@ -31,6 +31,7 @@ class Kernel
      */
     public function init(): void
     {
+        
         // Instantiate a container, set up auto-wiring, and load the services.
         $container = new Container();
         $container->delegate(new ReflectionContainer);
@@ -51,7 +52,7 @@ class Kernel
         // If there's an HTTP exception, handle it.
         } catch (HttpException $exception) {
             $response = (new HttpExceptionController(
-                $container->get(Plates::class),
+                $container->get(TemplateEngineInterface::class),
                 $container->get(ResponseInterface::class),
                 $exception
             ))->show($request);

@@ -11,7 +11,7 @@ declare(strict_types=1);
 
 namespace Prim\Framework\Controller;
 
-use League\Plates\Engine as Plates;
+use Prim\Framework\Internal\Policy\TemplateEngineInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 
@@ -19,7 +19,7 @@ class HomeController
 {
 
     /**
-     * @var Plates
+     * @var TemplateEngineInterface
      * @var ResponseInterface
      */
     private $template;
@@ -27,11 +27,13 @@ class HomeController
 
 
     /**
-     * @param Plates $engine
+     * @param TemplateEngineInterface $engine
      * @param ResponseInterface $response
      */
-    public function __construct(Plates $template, ResponseInterface $response)
-    {
+    public function __construct(
+        TemplateEngineInterface $template,
+        ResponseInterface $response
+    ) {
         $this->template = $template;
         $this->response = $response;
     }
@@ -43,7 +45,7 @@ class HomeController
      */
     public function index(ServerRequestInterface $request): ResponseInterface
     {
-        $this->response->getBody()->write($this->template->render(
+        $this->response->getBody()->write($this->template->renderTemplate(
             'home',
             [
                 'message' => 'Welcome to Prim!'

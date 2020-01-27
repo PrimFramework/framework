@@ -11,8 +11,8 @@ declare(strict_types=1);
 
 namespace Prim\Framework\Controller;
 
-use League\Plates\Engine as Plates;
 use League\Route\Http\Exception as HttpException;
+use Prim\Framework\Internal\Policy\TemplateEngineInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 
@@ -20,7 +20,7 @@ class HttpExceptionController
 {
 
     /**
-     * @var Plates
+     * @var TemplateEngineInterface
      * @var ResponseInterface
      * @var Exception
      */
@@ -30,12 +30,12 @@ class HttpExceptionController
 
 
     /**
-     * @param Plates $engine
+     * @param TemplateEngineInterface $engine
      * @param ResponseInterface $response
      * @param HttpException $exception
      */
     public function __construct(
-        Plates $template,
+        TemplateEngineInterface $template,
         ResponseInterface $response,
         HttpException $exception
     ) {
@@ -61,7 +61,7 @@ class HttpExceptionController
         }
 
         // Render the template file using the HttpException.
-        $this->response->getBody()->write($this->template->render(
+        $this->response->getBody()->write($this->template->renderTemplate(
             $templateFile,
             [
                 'error' => $this->exception->getStatusCode(),
