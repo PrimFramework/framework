@@ -1,8 +1,8 @@
 <?php
 
 /**
- * Provides the template engine.
- *
+ * Provides the settings.
+ * 
  * @author Kendall Weaver <kendalltweaver@gmail.com>
  * @since 0.0.1 Initial Release
  */
@@ -12,17 +12,17 @@ declare(strict_types=1);
 namespace Prim\Framework\Service;
 
 use League\Container\ServiceProvider\AbstractServiceProvider;
-use Prim\Framework\Internal\Policy\TemplateEngineInterface;
-use Prim\Framework\Internal\TemplateEngine;
+use Prim\Framework\Internal\Policy\SettingsInterface;
+use Prim\Framework\Internal\Settings;
 
-class TemplateEngineService extends AbstractServiceProvider
+class SettingsService extends AbstractServiceProvider
 {
 
     /**
      * @var array
      */
     protected $provides = [
-        TemplateEngineInterface::class
+        SettingsInterface::class
     ];
 
 
@@ -32,7 +32,6 @@ class TemplateEngineService extends AbstractServiceProvider
     public function register(): void
     {
         $this->getContainer()
-            ->add(TemplateEngineInterface::class, TemplateEngine::class)
-            ->addArgument(dirname(__DIR__) . "/View");
+            ->add(SettingsInterface::class, Settings::class);
     }
 }

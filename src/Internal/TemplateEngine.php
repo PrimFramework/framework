@@ -1,6 +1,13 @@
 <?php
 
+/**
+ * Implementation of the TemplateEngineInterface.
+ * 
+ * @author Kendall Weaver <kendalltweaver@gmail.com>
+ * @since 0.0.1 Initial Release
+ */
 
+declare(strict_types=1);
 
 namespace Prim\Framework\Internal;
 
@@ -9,8 +16,9 @@ use Prim\Framework\Internal\Policy\TemplateEngineInterface;
 
 class TemplateEngine extends Engine implements TemplateEngineInterface
 {
+
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     public function renderTemplate(string $name, array $data = []): string
     {

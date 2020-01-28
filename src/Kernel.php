@@ -17,6 +17,7 @@ use League\Route\Http\Exception as HttpException;
 use League\Route\Router;
 use League\Route\Strategy\ApplicationStrategy;
 use Prim\Framework\Controller\HttpExceptionController;
+use Prim\Framework\Internal\Policy\SettingsInterface;
 use Prim\Framework\Internal\Policy\TemplateEngineInterface;
 use Prim\Framework\Routes;
 use Prim\Framework\ServiceProviders;
@@ -54,6 +55,7 @@ class Kernel
             $response = (new HttpExceptionController(
                 $container->get(TemplateEngineInterface::class),
                 $container->get(ResponseInterface::class),
+                $container->get(SettingsInterface::class),
                 $exception
             ))->show($request);
         }

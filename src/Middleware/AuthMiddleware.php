@@ -11,7 +11,7 @@ declare(strict_types=1);
 
 namespace Prim\Framework\Middleware;
 
-use Prim\HttpFactory\HttpFactory;
+use League\Route\Http\Exception\UnauthorizedException;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\MiddlewareInterface;
@@ -38,9 +38,7 @@ class AuthMiddleware implements MiddlewareInterface
             return $handler->handle($request);
         }
 
-        // Otherwise return a 401.
-        return (new HttpFactory)
-            ->createResponse()
-            ->withStatus(401, "Unauthorized");
+        // Otherwise throw a 401 exception.
+        throw new UnauthorizedException("Unauthorized");
     }
 }

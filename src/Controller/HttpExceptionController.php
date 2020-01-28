@@ -12,6 +12,7 @@ declare(strict_types=1);
 namespace Prim\Framework\Controller;
 
 use League\Route\Http\Exception as HttpException;
+use Prim\Framework\Internal\Policy\SettingsInterface;
 use Prim\Framework\Internal\Policy\TemplateEngineInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
@@ -22,25 +23,30 @@ class HttpExceptionController
     /**
      * @var TemplateEngineInterface
      * @var ResponseInterface
+     * @var SettingsInterface
      * @var Exception
      */
     protected $template;
     protected $response;
+    protected $settings;
     protected $exception;
 
 
     /**
      * @param TemplateEngineInterface $engine
      * @param ResponseInterface $response
+     * @param SettingsInterface $settings
      * @param HttpException $exception
      */
     public function __construct(
         TemplateEngineInterface $template,
         ResponseInterface $response,
+        SettingsInterface $settings,
         HttpException $exception
     ) {
         $this->template = $template;
         $this->response = $response;
+        $this->settings = $settings;
         $this->exception = $exception;
     }
 
@@ -52,7 +58,7 @@ class HttpExceptionController
     public function show(ServerRequestInterface $request): ResponseInterface
     {
         // Determine if we're using an error specific template file.
-        $directory = $this->template->getDirectory() . '/HttpError';
+        $directory = $this->settings->get('path.views') . '/HttpError';
         $status = $this->exception->getStatusCode();
         if (file_exists("{$directory}/{$status}.php")) {
             $templateFile = "HttpError/{$status}";
