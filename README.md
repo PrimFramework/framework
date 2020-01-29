@@ -14,6 +14,7 @@ Installation is as simple as it gets:
 git clone https://github.com/PrimFramework/framework.git
 cd framework
 composer install
+cp env.ini.example env.ini
 ```
 
 When setting up your web server, point it to the `public` directory. All requests need to go through the `public/index.php` file. There's an `.htaccess` file that does this for enabled web servers, but you may want to delete it and handle it directly in the server configuration.
@@ -35,4 +36,4 @@ Prim also depends on its own [prim/httpfactory](https://packagist.org/packages/p
 ---
 ### Usage
 
-Coming soon...
+I'll have a website up woon with examples and tutorials.
